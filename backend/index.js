@@ -28,16 +28,16 @@ mongoose
     console.log(err.message);
   });
 
-// get all saved URLs 
+
+// get all saved URLs
 app.get("/all", async (req, res) => {
-    Url.find((error, data) => {
-      if (error) {
-        return next(error);
-      } else {
-        res.json(data);
-      }
-    });
-  })
+  try {
+    const data = await Url.find().exec();
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // URL shortener endpoint
 app.post("/short", async (req, res) => {
